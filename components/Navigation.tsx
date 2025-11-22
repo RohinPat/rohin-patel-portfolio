@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, Menu, X } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -80,13 +80,54 @@ export default function Navigation() {
             })}
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile menu button - Animated Hamburger */}
           <motion.button
-            className="md:hidden text-white"
+            className="md:hidden relative w-10 h-10 flex items-center justify-center"
             onClick={() => setIsOpen(!isOpen)}
             whileTap={{ scale: 0.9 }}
+            aria-label="Toggle menu"
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            <div className="w-6 h-5 relative flex flex-col justify-between">
+              {/* Top bar */}
+              <motion.span
+                className="w-full h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full"
+                animate={{
+                  rotate: isOpen ? 45 : 0,
+                  y: isOpen ? 8 : 0,
+                  scaleX: isOpen ? 1 : 1,
+                }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              />
+              
+              {/* Middle bar */}
+              <motion.span
+                className="w-full h-0.5 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full"
+                animate={{
+                  opacity: isOpen ? 0 : 1,
+                  scaleX: isOpen ? 0 : 1,
+                }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              />
+              
+              {/* Bottom bar */}
+              <motion.span
+                className="w-full h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full"
+                animate={{
+                  rotate: isOpen ? -45 : 0,
+                  y: isOpen ? -8 : 0,
+                  scaleX: isOpen ? 1 : 1,
+                }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              />
+            </div>
+            
+            {/* Glow effect on hover */}
+            <motion.div
+              className="absolute inset-0 bg-cyan-500/20 rounded-full blur-xl"
+              initial={{ opacity: 0, scale: 0 }}
+              whileHover={{ opacity: 1, scale: 1.5 }}
+              transition={{ duration: 0.3 }}
+            />
           </motion.button>
         </div>
       </div>
@@ -94,41 +135,57 @@ export default function Navigation() {
       {/* Mobile menu */}
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
-          className="md:hidden bg-black/95 backdrop-blur-lg border-t border-white/10"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="md:hidden bg-gradient-to-b from-black/98 to-gray-900/98 backdrop-blur-xl border-t border-cyan-500/30 shadow-lg shadow-cyan-500/10"
         >
-          <div className="px-4 py-4 space-y-3">
-            {navItems.map((item) => (
-              <Link
+          <div className="px-4 py-6 space-y-1">
+            {navItems.map((item, index) => (
+              <motion.div
                 key={item.name}
-                href={item.href}
-                className={`block transition-colors py-2 ${
-                  pathname === item.href ? "text-cyan-400 font-semibold" : "text-gray-300 hover:text-white"
-                }`}
-                onClick={() => setIsOpen(false)}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.05, duration: 0.3 }}
               >
-                {item.name}
-              </Link>
+                <Link
+                  href={item.href}
+                  className={`block transition-all py-3 px-4 rounded-lg ${
+                    pathname === item.href 
+                      ? "text-cyan-400 font-semibold bg-cyan-500/10 border-l-2 border-cyan-400" 
+                      : "text-gray-300 hover:text-white hover:bg-white/5"
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              </motion.div>
             ))}
-            <div className="flex items-center space-x-4 pt-4 border-t border-white/10">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: navItems.length * 0.05 + 0.1, duration: 0.3 }}
+              className="flex items-center justify-center space-x-6 pt-6 mt-4 border-t border-cyan-500/20"
+            >
               {socialLinks.map((link) => {
                 const Icon = link.icon;
                 return (
-                  <a
+                  <motion.a
                     key={link.label}
                     href={link.href}
                     target={link.external ? "_blank" : undefined}
                     rel={link.external ? "noopener noreferrer" : undefined}
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="p-3 bg-white/5 rounded-full text-gray-400 hover:text-cyan-400 hover:bg-cyan-500/10 transition-all border border-white/10 hover:border-cyan-500/50"
                     aria-label={link.label}
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    whileTap={{ scale: 0.9 }}
                   >
                     <Icon size={20} />
-                  </a>
+                  </motion.a>
                 );
               })}
-            </div>
+            </motion.div>
           </div>
         </motion.div>
       )}
