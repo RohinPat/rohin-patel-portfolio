@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ChevronDown, Code2, Cpu, Smartphone } from "lucide-react";
+import { Code2, Cpu, Smartphone } from "lucide-react";
 import { TypeAnimation } from "react-type-animation";
+import Link from "next/link";
 
 export default function Hero() {
   const containerVariants = {
@@ -35,7 +36,7 @@ export default function Hero() {
   ];
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden px-4">
+    <section className="min-h-screen flex items-center justify-center relative overflow-hidden px-4">
       {/* Floating Icons */}
       {floatingIcons.map(({ Icon, delay, position }, index) => (
         <motion.div
@@ -116,39 +117,25 @@ export default function Hero() {
           className="flex flex-wrap items-center justify-center gap-4"
           variants={itemVariants}
         >
-          <motion.a
-            href="#projects"
-            className="px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-lg font-semibold text-lg shadow-lg shadow-blue-500/50"
-            whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(59, 130, 246, 0.6)" }}
-            whileTap={{ scale: 0.95 }}
-          >
-            View My Work
-          </motion.a>
+          <Link href="/projects">
+            <motion.div
+              className="px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-lg font-semibold text-lg shadow-lg shadow-blue-500/50 cursor-pointer"
+              whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(59, 130, 246, 0.6)" }}
+              whileTap={{ scale: 0.95 }}
+            >
+              View My Work
+            </motion.div>
+          </Link>
 
-          <motion.a
-            href="#contact"
-            className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-lg font-semibold text-lg border border-white/20"
-            whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.15)" }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Get In Touch
-          </motion.a>
-        </motion.div>
-
-        <motion.div
-          className="mt-20"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
-        >
-          <motion.a
-            href="#projects"
-            className="inline-block text-gray-400 hover:text-white transition-colors"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-          >
-            <ChevronDown size={40} />
-          </motion.a>
+          <Link href="/contact">
+            <motion.div
+              className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-lg font-semibold text-lg border border-white/20 cursor-pointer"
+              whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.15)" }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Get In Touch
+            </motion.div>
+          </Link>
         </motion.div>
       </motion.div>
     </section>

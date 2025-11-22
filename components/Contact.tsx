@@ -5,7 +5,7 @@ import { Mail, Linkedin, Github, Send } from "lucide-react";
 
 export default function Contact() {
   return (
-    <section id="contact" className="min-h-screen py-20 px-4 flex items-center">
+    <section className="min-h-screen py-20 px-4 flex items-center">
       <div className="max-w-4xl mx-auto w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -22,21 +22,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  cursor: none;
-}
-
-/* Show default cursor on mobile */
-@media (max-width: 1024px) {
-  body {
-    cursor: default;
-  }
-}
-
-/* Hide default cursor on interactive elements for desktop */
-@media (min-width: 1024px) {
-  a, button {
-    cursor: none;
-  }
 }
 
 @layer utilities {

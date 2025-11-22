@@ -1,33 +1,25 @@
 "use client";
 
-import Hero from "@/components/Hero";
+import Playground from "@/components/Playground";
 import ParticleBackground from "@/components/ParticleBackground";
-import FloatingTechIcons from "@/components/FloatingTechIcons";
 import WaveBackground from "@/components/WaveBackground";
-import InteractiveCodeTerminal from "@/components/InteractiveCodeTerminal";
-import InteractiveStats from "@/components/InteractiveStats";
 import { motion } from "framer-motion";
 
-export default function Home() {
+export default function PlaygroundPage() {
   return (
     <main className="relative min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 overflow-hidden">
-      {/* Background layers */}
       <WaveBackground />
       <ParticleBackground />
-      <FloatingTechIcons />
       
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="relative z-10"
+        className="relative z-10 pt-24"
       >
-        <Hero />
-        <InteractiveCodeTerminal />
-        <InteractiveStats />
+        <Playground />
       </motion.div>
     </main>
   );
 }
-
 

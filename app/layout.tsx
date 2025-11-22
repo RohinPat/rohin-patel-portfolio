@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Navigation from "@/components/Navigation";
 
 export const metadata: Metadata = {
   title: "Rohin Patel - iOS Engineer & AI Developer",
@@ -21,6 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className="antialiased">
+        {/* Global navigation */}
+        <Navigation />
+        
         {children}
       </body>
     </html>

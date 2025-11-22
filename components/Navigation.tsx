@@ -3,23 +3,25 @@
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, Menu, X } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   const navItems = [
-    { name: "Home", href: "#home" },
-    { name: "Projects", href: "#projects" },
-    { name: "Playground", href: "#playground" },
-    { name: "Experience", href: "#experience" },
-    { name: "Skills", href: "#skills" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", href: "/" },
+    { name: "Projects", href: "/projects" },
+    { name: "Playground", href: "/playground" },
+    { name: "Experience", href: "/experience" },
+    { name: "Skills", href: "/skills" },
+    { name: "Contact", href: "/contact" },
   ];
 
   const socialLinks = [
-    { icon: Github, href: "https://github.com/RohinPat", label: "GitHub" },
-    { icon: Linkedin, href: "https://www.linkedin.com/in/rohinpat/", label: "LinkedIn" },
-    { icon: Mail, href: "#contact", label: "Contact" },
+    { icon: Github, href: "https://github.com/RohinPat", label: "GitHub", external: true },
+    { icon: Linkedin, href: "https://www.linkedin.com/in/rohinpat/", label: "LinkedIn", external: true },
   ];
 
   return (
@@ -31,26 +33,29 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <motion.a
-            href="#home"
-            className="text-2xl font-bold gradient-text-blue"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            RP
-          </motion.a>
+          <Link href="/">
+            <motion.div
+              className="text-2xl font-bold gradient-text-blue cursor-pointer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              RP
+            </motion.div>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <motion.a
-                key={item.name}
-                href={item.href}
-                className="text-gray-300 hover:text-white transition-colors"
-                whileHover={{ y: -2 }}
-              >
-                {item.name}
-              </motion.a>
+              <Link key={item.name} href={item.href}>
+                <motion.div
+                  className={`cursor-pointer transition-colors ${
+                    pathname === item.href ? "text-cyan-400 font-semibold" : "text-gray-300 hover:text-white"
+                  }`}
+                  whileHover={{ y: -2 }}
+                >
+                  {item.name}
+                </motion.div>
+              </Link>
             ))}
           </div>
 
@@ -62,8 +67,8 @@ export default function Navigation() {
                 <motion.a
                   key={link.label}
                   href={link.href}
-                  target={link.href.startsWith("http") ? "_blank" : undefined}
-                  rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  target={link.external ? "_blank" : undefined}
+                  rel={link.external ? "noopener noreferrer" : undefined}
                   className="text-gray-400 hover:text-white transition-colors"
                   whileHover={{ scale: 1.2, rotate: 5 }}
                   whileTap={{ scale: 0.9 }}
@@ -96,14 +101,16 @@ export default function Navigation() {
         >
           <div className="px-4 py-4 space-y-3">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.name}
                 href={item.href}
-                className="block text-gray-300 hover:text-white transition-colors py-2"
+                className={`block transition-colors py-2 ${
+                  pathname === item.href ? "text-cyan-400 font-semibold" : "text-gray-300 hover:text-white"
+                }`}
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
             <div className="flex items-center space-x-4 pt-4 border-t border-white/10">
               {socialLinks.map((link) => {
@@ -112,8 +119,8 @@ export default function Navigation() {
                   <a
                     key={link.label}
                     href={link.href}
-                    target={link.href.startsWith("http") ? "_blank" : undefined}
-                    rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    target={link.external ? "_blank" : undefined}
+                    rel={link.external ? "noopener noreferrer" : undefined}
                     className="text-gray-400 hover:text-white transition-colors"
                     aria-label={link.label}
                   >

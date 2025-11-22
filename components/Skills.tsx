@@ -44,7 +44,7 @@ const skillCategories = [
 
 export default function Skills() {
   return (
-    <section id="skills" className="min-h-screen py-20 px-4">
+    <section className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -2,34 +2,37 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Gamepad2, Keyboard, Brain } from "lucide-react";
-import SnakeGame from "./games/SnakeGame";
-import TypingTest from "./games/TypingTest";
-import MemoryGame from "./games/MemoryGame";
+import { Mountain, Car, Brain } from "lucide-react";
+import SkiingGame from "./games/SkiingGame";
+import TrafficGame from "./games/TrafficGame";
+import AIDemo from "./games/AIDemo";
 
-type GameType = "snake" | "typing" | "memory" | null;
+type GameType = "skiing" | "traffic" | "ai" | null;
 
 const games = [
   {
-    id: "snake" as GameType,
-    name: "Snake",
-    icon: Gamepad2,
-    description: "Classic snake game",
-    gradient: "from-green-500 to-emerald-500",
-  },
-  {
-    id: "typing" as GameType,
-    name: "Typing Test",
-    icon: Keyboard,
-    description: "Test your coding speed",
+    id: "skiing" as GameType,
+    name: "Ski Slalom",
+    icon: Mountain,
+    description: "Navigate gates down the slopes",
     gradient: "from-blue-500 to-cyan-500",
+    tag: "Personal Interest"
   },
   {
-    id: "memory" as GameType,
-    name: "Memory Cards",
+    id: "traffic" as GameType,
+    name: "Traffic Analytics",
+    icon: Car,
+    description: "Based on my Varidx project",
+    gradient: "from-orange-500 to-red-500",
+    tag: "Work Experience"
+  },
+  {
+    id: "ai" as GameType,
+    name: "AI Detection Demo",
     icon: Brain,
-    description: "Match the tech emojis",
+    description: "Live object detection",
     gradient: "from-purple-500 to-pink-500",
+    tag: "Tech Showcase"
   },
 ];
 
@@ -37,7 +40,7 @@ export default function Playground() {
   const [selectedGame, setSelectedGame] = useState<GameType>(null);
 
   return (
-    <section id="playground" className="min-h-screen py-20 px-4">
+    <section className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -84,6 +87,13 @@ export default function Playground() {
                     </motion.div>
 
                     {/* Content */}
+                    {/* Tag */}
+                    <div className="mb-2">
+                      <span className="px-2 py-1 bg-cyan-500/20 text-cyan-400 text-xs rounded-full border border-cyan-500/30">
+                        {game.tag}
+                      </span>
+                    </div>
+
                     <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">
                       {game.name}
                     </h3>
@@ -96,7 +106,7 @@ export default function Playground() {
                       className={`mt-6 px-4 py-2 bg-gradient-to-r ${game.gradient} text-white rounded-lg font-semibold inline-block`}
                       whileHover={{ boxShadow: "0 0 20px rgba(59, 130, 246, 0.5)" }}
                     >
-                      Play Now →
+                      {game.id === 'ai' ? 'Try Demo →' : 'Play Now →'}
                     </motion.div>
                   </motion.button>
                 </motion.div>
@@ -122,9 +132,9 @@ export default function Playground() {
               transition={{ duration: 0.3 }}
               className="w-full flex justify-center"
             >
-              {selectedGame === "snake" && <SnakeGame />}
-              {selectedGame === "typing" && <TypingTest />}
-              {selectedGame === "memory" && <MemoryGame />}
+              {selectedGame === "skiing" && <SkiingGame />}
+              {selectedGame === "traffic" && <TrafficGame />}
+              {selectedGame === "ai" && <AIDemo />}
             </motion.div>
           </div>
         )}
@@ -137,11 +147,30 @@ export default function Playground() {
             viewport={{ once: true }}
             className="mt-16 text-center"
           >
-            <div className="bg-gradient-to-r from-cyan-500/10 to-purple-500/10 backdrop-blur-sm rounded-xl border border-white/10 p-8 max-w-2xl mx-auto">
-              <h3 className="text-xl font-bold text-white mb-3">💡 Why Games?</h3>
-              <p className="text-gray-300">
-                These games showcase state management, event handling, game loops, and animations—all
-                fundamental skills in software development. Plus, they're fun! 🎉
+            <div className="bg-gradient-to-r from-cyan-500/10 to-purple-500/10 backdrop-blur-sm rounded-xl border border-white/10 p-8 max-w-3xl mx-auto">
+              <h3 className="text-xl font-bold text-white mb-4">💡 Why This Playground?</h3>
+              <div className="grid md:grid-cols-3 gap-6 text-left">
+                <div>
+                  <p className="text-cyan-400 font-semibold mb-2">⛷️ Personal</p>
+                  <p className="text-gray-300 text-sm">
+                    Skiing is my passion. This shows I can build things I care about.
+                  </p>
+                </div>
+                <div>
+                  <p className="text-orange-400 font-semibold mb-2">🚗 Professional</p>
+                  <p className="text-gray-300 text-sm">
+                    Based on my real Varidx traffic system (95% accuracy, 50k+ vehicles/day).
+                  </p>
+                </div>
+                <div>
+                  <p className="text-purple-400 font-semibold mb-2">🤖 Technical</p>
+                  <p className="text-gray-300 text-sm">
+                    Live demo of YOLO-style object detection using PyTorch & OpenCV.
+                  </p>
+                </div>
+              </div>
+              <p className="text-gray-400 text-sm mt-6">
+                Plus: localStorage-based leaderboards with Supabase integration ready!
               </p>
             </div>
           </motion.div>

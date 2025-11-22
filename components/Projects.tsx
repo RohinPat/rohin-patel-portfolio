@@ -12,7 +12,9 @@ const projects = [
     tech: ["SwiftUI", "BLE", "iOS", "Real-time Streaming", "UX Design"],
     icon: Activity,
     gradient: "from-purple-500 to-pink-500",
-    category: "Mobile/Health",
+    category: "Mobile",
+    github: null,
+    demo: null,
   },
   {
     title: "SiPhox 3D Body Scan iOS App",
@@ -20,7 +22,9 @@ const projects = [
     tech: ["SwiftUI", "Python", "3D Graphics", "Computer Vision"],
     icon: Smartphone,
     gradient: "from-blue-500 to-cyan-500",
-    category: "Mobile/Health",
+    category: "Mobile",
+    github: null,
+    demo: null,
   },
   {
     title: "Edge Traffic Analytics System",
@@ -28,7 +32,9 @@ const projects = [
     tech: ["Python", "YOLO", "OpenCV", "Azure", "IoT"],
     icon: Car,
     gradient: "from-orange-500 to-red-500",
-    category: "AI/CV",
+    category: "AI/ML",
+    github: null,
+    demo: null,
   },
   {
     title: "AiMessage - Mental Health Messaging",
@@ -36,7 +42,9 @@ const projects = [
     tech: ["Next.js", "React", "TypeScript", "MySQL", "Prisma", "Pusher", "NLP"],
     icon: MessageSquare,
     gradient: "from-indigo-500 to-purple-500",
-    category: "AI/Web",
+    category: "Web",
+    github: "https://github.com/RohinPat/ai-message",
+    demo: "https://ai-message.vercel.app",
   },
   {
     title: "AI Closet Organization",
@@ -45,6 +53,8 @@ const projects = [
     icon: Brain,
     gradient: "from-green-500 to-emerald-500",
     category: "AI/ML",
+    github: null,
+    demo: null,
   },
   {
     title: "BlueBikes Data Visualization",
@@ -52,20 +62,22 @@ const projects = [
     tech: ["Python", "Flask", "Plotly", "D3.js", "Pandas", "Altair"],
     icon: Activity,
     gradient: "from-cyan-500 to-blue-500",
-    category: "Data Science",
+    category: "AI/ML",
+    github: "https://github.com/RohinPat/data-visualization-bluebikes",
+    demo: "https://data-visualization-bluebikes.vercel.app",
   },
 ];
 
 export default function Projects() {
   const [filter, setFilter] = useState("All");
-  const categories = ["All", "Mobile/Health", "AI/CV", "AI/ML", "AI/Web", "Data Science"];
+  const categories = ["All", "Mobile", "AI/ML", "Web"];
 
   const filteredProjects = filter === "All" 
     ? projects 
     : projects.filter(p => p.category === filter);
 
   return (
-    <section id="projects" className="min-h-screen py-20 px-4">
+    <section className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -181,20 +193,40 @@ export default function Projects() {
 
                     {/* Links with glow effect */}
                     <div className="relative flex gap-3">
-                      <motion.button
-                        className="flex items-center gap-2 text-sm text-blue-400 hover:text-cyan-300 transition-colors"
-                        whileHover={{ x: 5, textShadow: "0 0 8px rgba(34, 211, 238, 0.8)" }}
-                      >
-                        <Github size={16} />
-                        Code
-                      </motion.button>
-                      <motion.button
-                        className="flex items-center gap-2 text-sm text-blue-400 hover:text-cyan-300 transition-colors"
-                        whileHover={{ x: 5, textShadow: "0 0 8px rgba(34, 211, 238, 0.8)" }}
-                      >
-                        <ExternalLink size={16} />
-                        Demo
-                      </motion.button>
+                      {project.github ? (
+                        <motion.a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 text-sm text-blue-400 hover:text-cyan-300 transition-colors"
+                          whileHover={{ x: 5, textShadow: "0 0 8px rgba(34, 211, 238, 0.8)" }}
+                        >
+                          <Github size={16} />
+                          Code
+                        </motion.a>
+                      ) : (
+                        <span className="flex items-center gap-2 text-sm text-gray-600 cursor-not-allowed">
+                          <Github size={16} />
+                          Private
+                        </span>
+                      )}
+                      {project.demo ? (
+                        <motion.a
+                          href={project.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 text-sm text-blue-400 hover:text-cyan-300 transition-colors"
+                          whileHover={{ x: 5, textShadow: "0 0 8px rgba(34, 211, 238, 0.8)" }}
+                        >
+                          <ExternalLink size={16} />
+                          Demo
+                        </motion.a>
+                      ) : (
+                        <span className="flex items-center gap-2 text-sm text-gray-600 cursor-not-allowed">
+                          <ExternalLink size={16} />
+                          NDA
+                        </span>
+                      )}
                     </div>
                   </div>
                 </Tilt>
