@@ -24,3 +24,4 @@ export const getLeaderboard = (game: string) => {
   return JSON.parse(localStorage.getItem(key) || '[]');
 };
 
+
